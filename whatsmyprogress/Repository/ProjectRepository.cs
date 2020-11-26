@@ -25,7 +25,7 @@ namespace whatsmyprogress.Repository
 
         public void Add(Project entity)
         {
-            var response = client.PostAsync($"{ApiAddress}/Add", GetByteArrayContent(entity)).Result;
+            var response = client.PostAsync($"{ApiAddress}/Add", RepositoryHelper.GetByteArrayContent(entity)).Result;
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new HttpRequestException();
@@ -54,15 +54,9 @@ namespace whatsmyprogress.Repository
 
         public async void Update(Project entity)
         {
-            await client.PostAsync($"{ApiAddress}/Update", GetByteArrayContent(entity));
+            await client.PostAsync($"{ApiAddress}/Update", RepositoryHelper.GetByteArrayContent(entity));
         }
 
-        ByteArrayContent GetByteArrayContent(Project entity) {
-            var buffer = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(entity));
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            return byteContent;
-        }
+     
     }
 }

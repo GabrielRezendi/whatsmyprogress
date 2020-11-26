@@ -21,10 +21,7 @@ namespace whatsmyprogress.Repository
 
         public async void Add(Task entity)
         {
-            var buffer = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(entity));
-            var byteContent = new ByteArrayContent(buffer);
-
-            await client.PostAsync($"{ApiAddress}/Add", byteContent);
+            await client.PostAsync($"{ApiAddress}/Add", RepositoryHelper.GetByteArrayContent(entity));
         }
 
         public async void Delete(int id)
@@ -35,21 +32,18 @@ namespace whatsmyprogress.Repository
         public async System.Threading.Tasks.Task<IEnumerable<Task>> Get()
         {
             var response = await client.GetAsync($"{ApiAddress}/Get/");
-            return JsonConvert.DeserializeObject(response.ToString()) as List<Task>;
+            return JsonConvert.DeserializeObject<List<Task>>(response.Content.ReadAsStringAsync().Result);
         }
 
         public async System.Threading.Tasks.Task<Task> Get(int id)
         {
             var response = await client.GetAsync($"{ApiAddress}/Get/{id}");
-            return JsonConvert.DeserializeObject(response.ToString()) as Task;
+            return JsonConvert.DeserializeObject<Task>(response.Content.ReadAsStringAsync().Result);
         }
 
         public async void Update(Task entity)
         {
-            var buffer = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(entity));
-            var byteContent = new ByteArrayContent(buffer);
-
-            await client.PostAsync($"{ApiAddress}/Update", byteContent);
+            await client.PostAsync($"{ApiAddress}/Update", RepositoryHelper.GetByteArrayContent(entity));
         }
     }
 }
