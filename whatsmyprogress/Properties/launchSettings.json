@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "whatsmyprogress": {
+      "commandName": "Project",
+      "commandLineArgs": "projects"
+    }
+  }
+}
