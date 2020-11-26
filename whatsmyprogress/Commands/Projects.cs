@@ -1,8 +1,6 @@
 ﻿using CommandDotNet;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using whatsmyprogress.DAL.Entities;
 using whatsmyprogress.Repository;
 using whatsmyprogress.Repository.Interfaces;
