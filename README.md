@@ -1,4 +1,4 @@
-![](docs\logo-sm.png)
+![](./docs/logo-sm.png)
 
 ------
 
