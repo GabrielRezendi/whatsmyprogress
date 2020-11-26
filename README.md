@@ -1,4 +1,4 @@
-![](C:\Users\Seletiva\source\repos\whatsmyprogress\docs\logo-sm.png)
+![](./docs/logo-sm.png)
 
 ------
 
