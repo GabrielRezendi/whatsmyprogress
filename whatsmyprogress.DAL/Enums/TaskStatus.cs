@@ -6,8 +6,8 @@ namespace whatsmyprogress.DAL.Enums
 {
     public enum TaskStatus
     {
-        Defined,
-        Doing,
-        Done
+        Planned,
+        Fighting,
+        Conquered
     }
 }
