@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using whatsmyprogress.DAL.Entities;
 using whatsmyprogress.Repository.Interfaces;
@@ -16,34 +17,52 @@ namespace whatsmyprogress.Repository
         public TaskRepository()
         {
             _configuration = Program.GetConfig();
-            ApiAddress = _configuration["ApiAddress"] + "/Task";
+            ApiAddress = _configuration["ApiAddress"] + "/Tasks";
         }
 
-        public async void Add(Task entity)
+        public async System.Threading.Tasks.Task Add(Task entity)
         {
-            await client.PostAsync($"{ApiAddress}/Add", RepositoryHelper.GetByteArrayContent(entity));
+            var response = await client.PostAsync($"{ApiAddress}/Add", RepositoryHelper.GetByteArrayContent(entity));
+
+            TreatHttpResponse(response.StatusCode);
         }
 
-        public async void Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            await client.DeleteAsync($"{ApiAddress}/Delete/{id}");
+            var response = await client.DeleteAsync($"{ApiAddress}/Delete/{id}");
+
+            TreatHttpResponse(response.StatusCode);
         }
 
-        public async System.Threading.Tasks.Task<IEnumerable<Task>> Get()
+        public async System.Threading.Tasks.Task<IEnumerable<Task>> List(int projectId)
         {
-            var response = await client.GetAsync($"{ApiAddress}/Get/");
+            var response = await client.GetAsync($"{ApiAddress}/GetByProjectId/{projectId}");
+
+            TreatHttpResponse(response.StatusCode);
+
             return JsonConvert.DeserializeObject<List<Task>>(response.Content.ReadAsStringAsync().Result);
         }
 
         public async System.Threading.Tasks.Task<Task> Get(int id)
         {
             var response = await client.GetAsync($"{ApiAddress}/Get/{id}");
+
+            TreatHttpResponse(response.StatusCode);
+
             return JsonConvert.DeserializeObject<Task>(response.Content.ReadAsStringAsync().Result);
         }
 
-        public async void Update(Task entity)
+        public async System.Threading.Tasks.Task Update(Task entity)
         {
-            await client.PostAsync($"{ApiAddress}/Update", RepositoryHelper.GetByteArrayContent(entity));
+            var response = await client.PostAsync($"{ApiAddress}/Update", RepositoryHelper.GetByteArrayContent(entity));
+
+            TreatHttpResponse(response.StatusCode);
+        }
+
+        void TreatHttpResponse(HttpStatusCode statusCode)
+        {
+            if (statusCode != System.Net.HttpStatusCode.OK)
+                throw new HttpRequestException();
         }
     }
 }

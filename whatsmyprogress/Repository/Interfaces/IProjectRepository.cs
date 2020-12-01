@@ -8,10 +8,10 @@ namespace whatsmyprogress.Repository.Interfaces
 {
     public interface IProjectRepository
     {
-        void Add(Project entity);
-        void Delete(int id);
-        void Update(Project entity);
-        Task<IEnumerable<Project>> Get();
-        Task<Project> Get(int id);
+        System.Threading.Tasks.Task Add(Project entity);
+        System.Threading.Tasks.Task Delete(int id);
+        System.Threading.Tasks.Task Update(Project entity);
+        System.Threading.Tasks.Task<IEnumerable<Project>> Get();
+        System.Threading.Tasks.Task<Project> Get(int id);
     }
 }

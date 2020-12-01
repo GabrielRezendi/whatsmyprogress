@@ -7,10 +7,10 @@ namespace whatsmyprogress.Repository.Interfaces
 {
     public interface ITaskRepository
     {
-        void Add(Task entity);
-        void Delete(int id);
-        void Update(Task entity);
-        System.Threading.Tasks.Task<IEnumerable<Task>> Get();
+        System.Threading.Tasks.Task Add(Task entity);
+        System.Threading.Tasks.Task Delete(int id);
+        System.Threading.Tasks.Task Update(Task entity);
+        System.Threading.Tasks.Task<IEnumerable<Task>> List(int id);
         System.Threading.Tasks.Task<Task> Get(int id);
     }
 }
